@@ -1,0 +1,13 @@
+{
+    "name": "instant-oats",
+    "version": "0.0.1",
+    "scripts": {
+        "start": "node ./build/app/Server.js"
+    },
+    "devDependencies": {
+        "mustache": "^0.8.2",
+        "q": "^1.1.2",
+        "q-io": "^1.11.6",
+        "change-case": "^2.1.5"
+    }
+}

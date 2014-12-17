@@ -1,0 +1,157 @@
+[
+    {
+        "name": "servers",
+        "members": [
+            {
+                "name": "id",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL",
+                    "AUTO_INCREMENT"
+                ]
+            },
+            {
+                "name": "ip",
+                "type": "VARCHAR(255)",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            },
+            {
+                "name": "host",
+                "type": "VARCHAR(255)",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            }
+        ]
+    },
+
+    {
+        "name": "cpus",
+        "members": [
+            {
+                "name": "id",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL",
+                    "AUTO_INCREMENT"
+                ]
+            },
+            {
+                "name": "server_id",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL"
+                ],
+                "references": "accounts"
+            },
+            {
+                "name": "percent",
+                "type": "FLOAT",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            },
+            {
+                "name": "date",
+                "type": "DATETIME",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            }
+        ]
+    },
+
+
+    {
+        "name": "mems",
+        "members": [
+            {
+                "name": "id",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL",
+                    "AUTO_INCREMENT"
+                ]
+            },
+            {
+                "name": "server_id",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL"
+                ],
+                "references": "accounts"
+            },
+            {
+                "name": "free",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            },
+            {
+                "name": "used",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            },
+            {
+                "name": "date",
+                "type": "DATETIME",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            }
+        ]
+    },
+
+
+
+
+    {
+        "name": "nets",
+        "members": [
+            {
+                "name": "id",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL",
+                    "AUTO_INCREMENT"
+                ]
+            },
+            {
+                "name": "server_id",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL"
+                ],
+                "references": "accounts"
+            },
+            {
+                "name": "rx",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            },
+            {
+                "name": "tx",
+                "type": "INT",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            },
+            {
+                "name": "date",
+                "type": "DATETIME",
+                "attributes": [
+                    "NOT NULL"
+                ]
+            }
+        ]
+    }
+
+
+]
