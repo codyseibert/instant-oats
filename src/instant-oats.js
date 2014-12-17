@@ -20,19 +20,19 @@ var InstantOats = function (pOats) {
         {
             name: 'App',
             type: 'single',
-            src: '../templates/client/App.tpl'
+            src: '../templates/client/App.tpl',
             dest: './src/public/js/'
         },
         {
             name: 'Controller',
             type: 'multi',
-            src: '../templates/client/Controller.tpl'
+            src: '../templates/client/Controller.tpl',
             dest: './src/public/js/controllers/'
         },
         {
             name: 'Service',
             type: 'multi',
-            src: '../templates/client/Service.tpl'
+            src: '../templates/client/Service.tpl',
             dest: './src/public/js/services/'
         },
 
@@ -40,81 +40,99 @@ var InstantOats = function (pOats) {
         {
             name: 'ControllerHelper',
             type: 'single',
-            src: '../templates/server/ControllerHelper.tpl'
+            src: '../templates/server/ControllerHelper.tpl',
             dest: './src/'
         },
         {
             name: 'DaoHelper',
             type: 'single',
-            src: '../templates/server/DaoHelper.tpl'
+            src: '../templates/server/DaoHelper.tpl',
             dest: './src/'
         },
         {
             name: 'DBConnection',
             type: 'single',
-            src: '../templates/server/DBConnection.tpl'
+            src: '../templates/server/DBConnection.tpl',
             dest: './src/'
         },
         {
             name: 'Messages',
             type: 'single',
-            src: '../templates/server/Messages.tpl'
+            src: '../templates/server/Messages.tpl',
             dest: './src/'
         },
         {
             name: 'Mysql',
             type: 'single',
-            src: '../templates/server/Mysql.tpl'
+            src: '../templates/server/Mysql.tpl',
             dest: './db/'
         },
         {
             name: 'Routes',
             type: 'single',
-            src: '../templates/server/Routes.tpl'
+            src: '../templates/server/Routes.tpl',
             dest: './src/'
         },
         {
             name: 'Server',
             type: 'single',
-            src: '../templates/server/Server.tpl'
+            src: '../templates/server/Server.tpl',
             dest: './src/'
         },
         {
             name: 'Dao',
             type: 'multi',
-            src: '../templates/client/Dao.tpl'
+            src: '../templates/client/Dao.tpl',
             dest: './src/daos/'
         },
         {
             name: 'Controller',
             type: 'multi',
-            src: '../templates/client/Controller.tpl'
+            src: '../templates/client/Controller.tpl',
             dest: './src/controllers/'
         },
         {
             name: 'Model',
             type: 'multi',
-            src: '../templates/server/Model.tpl'
-            dest: './src/models'
-        },
+            src: '../templates/server/Model.tpl',
+            dest: './src/models/'
+        }
     ];
 
     var makeDirectories = function () {
-        fs.mkdir('./src');
-        fs.mkdir('./src/public');
-        fs.mkdir('./src/public/css');
-        fs.mkdir('./src/public/js');
-        fs.mkdir('./src/public/js/controllers');
-        fs.mkdir('./src/public/js/services');
-        fs.mkdir('./src/public/templates');
-        fs.mkdir('./src/public/images');
-        fs.mkdir('./src/public/images/uploads');
-        fs.mkdir('./db');
-        fs.mkdir('./src/controllers');
-        fs.mkdir('./src/daos');
-        fs.mkdir('./src/models');
-        fs.mkdir('./src/middleware');
-        fs.mkdir('./test');
+        var dirs = [
+            './src',
+            './src/public',
+            './src/public/css',
+            './src/public/js',
+            './src/public/js/controllers',
+            './src/public/js/services',
+            './src/public/templates',
+            './src/public/images',
+            './src/public/images/uploads',
+            './db',
+            './src/controllers',
+            './src/daos',
+            './src/models',
+            './src/middleware',
+            './test'
+        ];
+
+        var promise = null;
+        var mkdir = function (dir) {
+            if (promise) {
+                promise = promise.then(function () {
+                    return FS.makeDirectory(dir);
+                })
+            } else {
+                promise = FS.makeDirectory(dir);
+            }
+        };
+
+        for (var i = 0; i < dirs.length; i += 1) {
+            var dir = dirs[i];
+            mkdir(dir);
+        }
     }
 
     var preprocessOats = function () {
@@ -140,29 +158,33 @@ var InstantOats = function (pOats) {
 
     var processTemplateDefs = function () {
         var i, templateDef, processMulti, out;
+
+        var processTemplate = function (pTemplateDef) {
+            FS.read(pTemplateDef.src)
+                .then(function (pTemplateFile){
+                    var j;
+                    if (pTemplateDef.type === 'single') {
+                        out = Mustache.render(pTemplateFile, {oats: oats});
+                        var dest = pTemplateDef.dest + pTemplateDef.name + '.js';
+                        FS.write(dest, out);
+                    } else {
+                        for (j = 0; j < oats.length; j += 1) {
+                            oat = oats[j];
+                            out = Mustache.render(pTemplateFile, oat);
+                            var dest = pTemplateDef.dest + oat.name_title + pTemplateDef.name + '.js';
+                            FS.write(dest, out);
+                        }
+                    }
+                });
+        };
+
         for (i = 0; i < templateDefs.length; i += 1) {
-            templateDef = templateDefs[i];
-
-            if (templateDef.type === "single") {
-                out = Mustache.render(template, {oats: oats});
-            } else {
-                for (i = 0; i < oats.length; i += 1) {
-                    oat = oats[i];
-                    out = Mustache.render(template, oat);
-                }
-            }
-
-            var dest = templateDef.dest + templateDef.name + '.js';
-            //fs.writeFile(templateDef.dest + templateDef.name + '.js');
-            console.log(dest);
-
-            fs.writeFile(dest, out, function (pErr) {
-                console.log(pErr);
-            });
+            processTemplate(templateDefs[i]);
         }
     };
 
     preprocessOats();
+    makeDirectories();
     processTemplateDefs();
 };
 

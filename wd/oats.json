@@ -44,7 +44,7 @@
                 "attributes": [
                     "NOT NULL"
                 ],
-                "references": "accounts"
+                "references": ["accounts"]
             },
             {
                 "name": "percent",
@@ -81,7 +81,7 @@
                 "attributes": [
                     "NOT NULL"
                 ],
-                "references": "accounts"
+                "references": ["accounts"]
             },
             {
                 "name": "free",
@@ -127,7 +127,7 @@
                 "attributes": [
                     "NOT NULL"
                 ],
-                "references": "accounts"
+                "references": ["accounts"]
             },
             {
                 "name": "rx",

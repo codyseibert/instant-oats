@@ -1,12 +1,18 @@
-angular.module('YOU_APP', ['ngRoute'])
+angular.module('YOUR_APP', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         'use strict';
 
         $routeProvider
-            .when('/login', {
-                controller: 'LoginController',
-                templateUrl: 'templates/Login.tpl'
+            {{#oats}}
+            .when('/{{name}}', {
+                controller: '{{name_single_title}}Controller',
+                templateUrl: 'templates/{{name_single_title}}.tpl'
             })
+            .when('/{{name}}/:{{name_single}}Id', {
+                controller: '{{name_single_title}}Controller',
+                templateUrl: 'templates/{{name_title}}.tpl'
+            })
+            {{/oats}}
             .otherwise({
                 redirectTo: '/'
             });
