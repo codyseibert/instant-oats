@@ -23,7 +23,7 @@ var {{name_title}}Dao = function () {
         );
     };
 
-    this.create{{name_title}} = function (p{{name_single_title}}, pCallback) {
+    this.create{{name_single_title}} = function (p{{name_single_title}}, pCallback) {
         theDaoHelper.executeQuery(
             "INSERT INTO {{name}} ({{#members}}{{name}}, {{/members}}) VALUES ({{#members}}?, {{/members}})",
             [{{#members}}p{{name_single_title}}.{{name}}, {{/members}}],
@@ -32,7 +32,7 @@ var {{name_title}}Dao = function () {
         );
     };
 
-    this.update{{name_title}} = function (p{{name_single_title}}Id, p{{name_single_title}}, pCallback) {
+    this.update{{name_single_title}} = function (p{{name_single_title}}Id, p{{name_single_title}}, pCallback) {
         theDaoHelper.executeQuery(
             "UPDATE {{name}} SET ({{#members}}{{name}} = ?, {{/members}}) WHERE id = ?",
             [{{#members}}p{{name_single_title}}.{{name}}, {{/members}} p{{name_single_title}}Id],
@@ -41,7 +41,7 @@ var {{name_title}}Dao = function () {
         );
     };
 
-    this.delete{{name_title}} = function (p{{name_single_title}}Id, pCallback) {
+    this.delete{{name_single_title}} = function (p{{name_single_title}}Id, pCallback) {
         theDaoHelper.executeQuery(
             "DELETE FROM {{name}} WHERE id = ?",
             [p{{name_single_title}}Id],

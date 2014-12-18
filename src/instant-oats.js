@@ -21,19 +21,22 @@ var InstantOats = function (pOats) {
             name: 'App',
             type: 'single',
             src: '../templates/client/App.tpl',
-            dest: './src/public/js/'
+            dest: './src/public/js/',
+            ext: 'js'
         },
         {
             name: 'Controller',
             type: 'multi',
             src: '../templates/client/Controller.tpl',
-            dest: './src/public/js/controllers/'
+            dest: './src/public/js/controllers/',
+            ext: 'js'
         },
         {
             name: 'Service',
             type: 'multi',
             src: '../templates/client/Service.tpl',
-            dest: './src/public/js/services/'
+            dest: './src/public/js/services/',
+            ext: 'js'
         },
 
         // Server Based Templates
@@ -41,61 +44,92 @@ var InstantOats = function (pOats) {
             name: 'ControllerHelper',
             type: 'single',
             src: '../templates/server/ControllerHelper.tpl',
-            dest: './src/'
+            dest: './src/',
+            ext: 'js'
         },
         {
             name: 'DaoHelper',
             type: 'single',
             src: '../templates/server/DaoHelper.tpl',
-            dest: './src/'
+            dest: './src/',
+            ext: 'js'
         },
         {
             name: 'DBConnection',
             type: 'single',
             src: '../templates/server/DBConnection.tpl',
-            dest: './src/'
+            dest: './src/',
+            ext: 'js'
         },
         {
             name: 'Messages',
             type: 'single',
             src: '../templates/server/Messages.tpl',
-            dest: './src/'
+            dest: './src/',
+            ext: 'js'
         },
         {
             name: 'Mysql',
             type: 'single',
             src: '../templates/server/Mysql.tpl',
-            dest: './db/'
+            dest: './db/',
+            ext: 'sql'
         },
         {
             name: 'Routes',
             type: 'single',
             src: '../templates/server/Routes.tpl',
-            dest: './src/'
+            dest: './src/',
+            ext: 'js'
         },
         {
             name: 'Server',
             type: 'single',
             src: '../templates/server/Server.tpl',
-            dest: './src/'
+            dest: './src/',
+            ext: 'js'
+        },
+        {
+            name: 'bower',
+            type: 'single',
+            src: '../templates/client/bower.tpl',
+            dest: './src/public',
+            ext: 'json'
+        },
+        {
+            name: 'Gruntfile',
+            type: 'single',
+            src: '../templates/Gruntfile.tpl',
+            dest: './',
+            ext: 'js'
+        },
+        {
+            name: 'package',
+            type: 'single',
+            src: '../templates/package.tpl',
+            dest: './',
+            ext: 'json'
         },
         {
             name: 'Dao',
             type: 'multi',
-            src: '../templates/client/Dao.tpl',
-            dest: './src/daos/'
+            src: '../templates/server/Dao.tpl',
+            dest: './src/daos/',
+            ext: 'js'
         },
         {
             name: 'Controller',
             type: 'multi',
             src: '../templates/client/Controller.tpl',
-            dest: './src/controllers/'
+            dest: './src/controllers/',
+            ext: 'js'
         },
         {
             name: 'Model',
             type: 'multi',
             src: '../templates/server/Model.tpl',
-            dest: './src/models/'
+            dest: './src/models/',
+            ext: 'js'
         }
     ];
 
@@ -165,17 +199,20 @@ var InstantOats = function (pOats) {
                     var j;
                     if (pTemplateDef.type === 'single') {
                         out = Mustache.render(pTemplateFile, {oats: oats});
-                        var dest = pTemplateDef.dest + pTemplateDef.name + '.js';
+                        var dest = pTemplateDef.dest + pTemplateDef.name + '.' +  pTemplateDef.ext;
                         FS.write(dest, out);
                     } else {
                         for (j = 0; j < oats.length; j += 1) {
-                            oat = oats[j];
+                            var oat = oats[j];
                             out = Mustache.render(pTemplateFile, oat);
-                            var dest = pTemplateDef.dest + oat.name_title + pTemplateDef.name + '.js';
+                            var dest = pTemplateDef.dest + oat.name_title + pTemplateDef.name + '.' + pTemplateDef.ext;
                             FS.write(dest, out);
                         }
                     }
-                });
+                })
+                .fail(function (pErr) {
+                    console.log(pErr);
+                })
         };
 
         for (i = 0; i < templateDefs.length; i += 1) {
