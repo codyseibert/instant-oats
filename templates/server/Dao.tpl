@@ -7,7 +7,7 @@ var {{name_title}}Dao = function () {
 
     this.get{{name_single_title}} = function (p{{name_single_title}}Id, pCallback) {
         theDaoHelper.executeQuery(
-            "SELECT {{#members}}{{name}},{{/members}} FROM {{name}} WHERE id = ?",
+            "SELECT {{#members}}{{name}}{{^last}}, {{/last}}{{/members}} FROM {{name}} WHERE id = ?",
             [p{{name_single_title}}Id],
             theDaoHelper.SINGLE,
             pCallback
@@ -16,8 +16,8 @@ var {{name_title}}Dao = function () {
 
     this.get{{name_title}} = function (pCallback) {
         theDaoHelper.executeQuery(
-            "SELECT {{#members}}{{name}},{{/members}} FROM {{name}}",
-            [p{{name_single_title}}Id],
+            "SELECT {{#members}}{{name}}{{^last}}, {{/last}}{{/members}} FROM {{name}}",
+            [],
             theDaoHelper.MULTIPLE,
             pCallback
         );
@@ -25,17 +25,17 @@ var {{name_title}}Dao = function () {
 
     this.create{{name_single_title}} = function (p{{name_single_title}}, pCallback) {
         theDaoHelper.executeQuery(
-            "INSERT INTO {{name}} ({{#members}}{{name}}, {{/members}}) VALUES ({{#members}}?, {{/members}})",
-            [{{#members}}p{{name_single_title}}.{{name}}, {{/members}}],
-            theDaoHelper.MULTIPLE,
+            "INSERT INTO {{name}} ({{#members}}{{^isPrimary}}{{name}}{{^last}}, {{/last}}{{/isPrimary}}{{/members}}) VALUES ({{#members}}{{^isPrimary}}?{{^last}}, {{/last}}{{/isPrimary}}{{/members}})",
+            [{{#members}}{{^isPrimary}}p{{name_single_title}}.{{name}}{{^last}}, {{/last}}{{/isPrimary}}{{/members}}],
+            theDaoHelper.INSERT,
             pCallback
         );
     };
 
-    this.update{{name_single_title}} = function (p{{name_single_title}}Id, p{{name_single_title}}, pCallback) {
+    this.update{{name_single_title}} = function (p{{name_single_title}}, pCallback) {
         theDaoHelper.executeQuery(
-            "UPDATE {{name}} SET ({{#members}}{{name}} = ?, {{/members}}) WHERE id = ?",
-            [{{#members}}p{{name_single_title}}.{{name}}, {{/members}} p{{name_single_title}}Id],
+            "UPDATE {{name}} SET {{#members}}{{^isId}}{{name}} = ?{{^last}}, {{/last}}{{/isId}}{{/members}} WHERE id = ?",
+            [{{#members}}{{^isId}}p{{name_single_title}}.{{name}}{{^last}}, {{/last}}{{/isId}}{{/members}}, p{{name_single_title}}.id],
             theDaoHelper.UPDATE,
             pCallback
         );

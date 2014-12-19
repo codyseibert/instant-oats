@@ -2,18 +2,18 @@
 var {{name_title}}Model = function () {
     'use strict';
 
-    var {{#members}}{{name}},{{/members}};
+    var {{#members}}{{the_title}}{{^last}}, {{/last}}{{/members}};
 
     {{#members}}
-    this.set{{name_single_title}} = function (p{{name}}) {
-        {{name}} = p{{name}};
+    this.set{{title}} = function (p{{title}}) {
+        {{the_title}} = p{{title}};
     }
 
-    this.get{{name_single_title}} = function () {
-        return {{name}};
+    this.get{{title}} = function () {
+        return {{the_title}};
     }
 
     {{/members}}
 };
 
-module.exports = new {{name_title}}Model();
+module.exports = {{name_title}}Model();

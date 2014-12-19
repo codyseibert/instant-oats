@@ -1,5 +1,5 @@
 {
-    "name": "YOUR_APP",
+    "name": "WILL_BE_REPLACED_WITH_YOUR_APP_NAME",
     "version": "0.0.1",
     "scripts": {
         "start": "node ./build/app/Server.js"

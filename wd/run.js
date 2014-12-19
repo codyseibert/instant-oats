@@ -4,7 +4,7 @@ var instantOats = require('../src/instant-oats');
 
 FS.read('./oats.json')
     .then(function (pData) {
-        instantOats(JSON.parse(pData));
+        instantOats("stethoscope", JSON.parse(pData));
     })
     .fail(function (pError) {
         console.log(pError);

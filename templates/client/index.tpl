@@ -3,12 +3,12 @@
 <html lang="en" data-framework="angularjs">
     <head>
         <meta charset="utf-8" />
-        <title>YOUR_APP</title>
+        <title>WILL_BE_REPLACED_WITH_YOUR_APP_NAME</title>
         <link rel="stylesheet" href="css/app.css" />
         <style>[ng-cloak] { display: none; }</style>
     </head>
 
-    <body ng-app="YOUR_APP">
+    <body ng-app="WILL_BE_REPLACED_WITH_YOUR_APP_NAME">
 
         <ng-view autoscroll="true" />
 

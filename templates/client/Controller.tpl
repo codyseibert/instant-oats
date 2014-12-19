@@ -1,5 +1,5 @@
 
-angular.module('YOUR_APP')
+angular.module('WILL_BE_REPLACED_WITH_YOUR_APP_NAME')
     .controller('{{name_title}}Controller', [
         '$scope',
         '$routeParams',

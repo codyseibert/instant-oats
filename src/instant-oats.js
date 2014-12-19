@@ -5,7 +5,7 @@ var fs = require('fs');
 var Q = require('q');
 var FS = require('q-io/fs');
 
-var InstantOats = function (pOats) {
+var InstantOats = function (pAppName, pOats) {
     'use strict';
 
     var oats,
@@ -93,7 +93,7 @@ var InstantOats = function (pOats) {
             name: 'bower',
             type: 'single',
             src: '../templates/client/bower.tpl',
-            dest: './src/public',
+            dest: './src/public/',
             ext: 'json'
         },
         {
@@ -120,7 +120,7 @@ var InstantOats = function (pOats) {
         {
             name: 'Controller',
             type: 'multi',
-            src: '../templates/client/Controller.tpl',
+            src: '../templates/server/Controller.tpl',
             dest: './src/controllers/',
             ext: 'js'
         },
@@ -164,13 +164,12 @@ var InstantOats = function (pOats) {
         };
 
         for (var i = 0; i < dirs.length; i += 1) {
-            var dir = dirs[i];
-            mkdir(dir);
+            mkdir(dirs[i]);
         }
     }
 
     var preprocessOats = function () {
-        var i, oat;
+        var i, j, members, member, oat;
 
         for (i = 0; i < oats.length; i += 1) {
             oat = oats[i];
@@ -187,6 +186,52 @@ var InstantOats = function (pOats) {
             oat.name_single_title = (function () {
                 return changeCase.titleCase(oat.name_single);
             }());
+
+            members = oat.members;
+            for (j = 0; j < members.length; j += 1) {
+                member = members[j];
+                member.title = changeCase.titleCase(member.name).replace(' ', '');
+                member.the_title = 'the' + member.title;
+
+                if (j === members.length - 1) {
+                    member.last = true;
+                }
+
+                if (oat.name.indexOf("id") !== -1) {
+                    member.isId = true;
+                }
+
+                if (oat === "id") {
+                    member.isPrimary = true;
+                }
+
+                var references = member.references;
+                if (references) {
+                    oat.hasReferences = true;
+                    for (var k = 0; k < references.length; k += 1) {
+                        var reference = references[k];
+                        references[k] = {};
+                        references[k].name = reference;
+
+                        if (k === references.length - 1) {
+                            references[k].last = true;
+                        }
+                    }
+                }
+
+                var attributes = member.attributes;
+                if (attributes) {
+                    for (var k = 0; k < attributes.length; k += 1) {
+                        var attribute = attributes[k];
+                        attributes[k] = {};
+                        attributes[k].name = attribute;
+
+                        if (k === attributes.length - 1) {
+                            attributes[k].last = true;
+                        }
+                    }
+                }
+            }
         }
     };
 
@@ -199,12 +244,14 @@ var InstantOats = function (pOats) {
                     var j;
                     if (pTemplateDef.type === 'single') {
                         out = Mustache.render(pTemplateFile, {oats: oats});
+                        out = out.replace(/WILL_BE_REPLACED_WITH_YOUR_APP_NAME/g, pAppName);
                         var dest = pTemplateDef.dest + pTemplateDef.name + '.' +  pTemplateDef.ext;
                         FS.write(dest, out);
                     } else {
                         for (j = 0; j < oats.length; j += 1) {
                             var oat = oats[j];
                             out = Mustache.render(pTemplateFile, oat);
+                            out = out.replace(/WILL_BE_REPLACED_WITH_YOUR_APP_NAME/g, pAppName);
                             var dest = pTemplateDef.dest + oat.name_title + pTemplateDef.name + '.' + pTemplateDef.ext;
                             FS.write(dest, out);
                         }

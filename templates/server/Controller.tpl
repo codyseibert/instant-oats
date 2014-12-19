@@ -29,7 +29,7 @@ var {{name_title}}Controller = function () {
             {{name_single}}Id;
         {{name_single}}Id = pReq.params.{{name_single}}Id;
         callback = theControllerHelper.createDefaultCallback(pRes);
-        the{{name_title}}Dao.update{{name_single_title}}({{name_single}}Id, pReq.body, callback);
+        the{{name_title}}Dao.update{{name_single_title}}(pReq.body, callback);
     };
 
     this.delete{{name_title}} = function (pReq, pRes) {

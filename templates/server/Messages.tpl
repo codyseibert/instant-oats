@@ -1,4 +1,3 @@
-/*jslint nomen: true */
 
 var Messages = function () {
     'use strict';

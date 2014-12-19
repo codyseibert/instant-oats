@@ -1,7 +1,5 @@
-/*jslint nomen: true */
-/*global angular: false */
 
-angular.module('YOUR_APP')
+angular.module('WILL_BE_REPLACED_WITH_YOUR_APP_NAME')
     .factory('{{name_title}}Service', ['$http', function ($http) {
         'use strict';
 
