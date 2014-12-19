@@ -1,5 +1,5 @@
-var theDB = require('../DBConnection');
-var theMessages = require('../Messages');
+var theDB = require('./DBConnection');
+var theMessages = require('./Messages');
 
 var ControllerHelper = function () {
     'use strict';

@@ -1,6 +1,8 @@
 var app = require('./App');
 
-{{#oats}}var {{name}}Controller = require ('./controllers/{{name}}Controller'){{/oats}}
+{{#oats}}
+var {{name_title}}Controller = require ('./controllers/{{name_title}}Controller');
+{{/oats}}
 
 var Routes = function () {
     'use strict';
@@ -8,19 +10,19 @@ var Routes = function () {
     {{#oats}}
     // {{name}}
     app.get('/api/{{name}}',
-        {{name}}Controller.get{{name_title}});
+        {{name_title}}Controller.get{{name_title}});
 
     app.get('/api/{{name}}/:{{name_single}}Id',
-        {{name}}Controller.get{{name_single_title}});
-
-    app.post('/api/{{name}}/:{{name_single}}Id',
-        {{name}}Controller.create{{name_single_title}});
+        {{name_title}}Controller.get{{name_single_title}});
 
     app.post('/api/{{name}}',
-        {{name}}Controller.update{{name_single_title}});
+        {{name_title}}Controller.create{{name_single_title}});
+
+    app.post('/api/{{name}}/:{{name_single}}Id',
+        {{name_title}}Controller.update{{name_single_title}});
 
     app.delete('/api/{{name}}/:{{name_single}}Id',
-        {{name}}Controller.delete{{name_single_title}});
+        {{name_title}}Controller.delete{{name_single_title}});
 
     {{/oats}}
 };

@@ -1,2 +1,7 @@
 node_modules/
-
+wd/db/
+wd/src/
+wd/node_modules/
+wd/test/
+wd/Gruntfile.js
+wd/package.json

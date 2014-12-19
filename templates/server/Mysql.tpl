@@ -15,7 +15,7 @@ CREATE TABLE {{name}}
     {{#members}}
         {{#references}}
     FOREIGN KEY ({{name}})
-        REFERENCES {{name}}(id)
+        REFERENCES {{rname}}(id)
         ON DELETE CASCADE{{^last}},{{/last}}
 
         {{/references}}

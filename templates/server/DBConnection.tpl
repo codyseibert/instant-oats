@@ -6,10 +6,10 @@ var DBConnection = function () {
     var connection;
 
     connection = mysql.createConnection({
-        host: 'host',
-        database: 'database',
-        user: 'user',
-        password: 'password'
+        host: 'localhost',
+        database: 'WILL_BE_REPLACED_WITH_YOUR_APP_NAME',
+        user: 'root',
+        password: 'YOUR_PASSWORD'
     });
     connection.connect();
 

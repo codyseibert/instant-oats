@@ -1,5 +1,5 @@
-var theDB = require('../DBConnection');
-var theMessages = require('../Messages');
+var theDB = require('./DBConnection');
+var theMessages = require('./Messages');
 
 var DaoHelper = function () {
     'use strict';
@@ -14,7 +14,6 @@ var DaoHelper = function () {
     this.executeQuery = function (pQuery, pValues, pType, pCallback) {
         theDB.query(pQuery, pValues, function (pErr, pResults) {
             if (pErr) {
-                console.log(pErr);
                 pCallback(theMessages.ERROR);
             } else if (!pResults) {
                 pCallback(theMessages.error("No results returned on query!"));

@@ -5,12 +5,8 @@ angular.module('WILL_BE_REPLACED_WITH_YOUR_APP_NAME', ['ngRoute'])
         $routeProvider
             {{#oats}}
             .when('/{{name}}', {
-                controller: '{{name_single_title}}Controller',
-                templateUrl: 'templates/{{name_single_title}}.tpl'
-            })
-            .when('/{{name}}/:{{name_single}}Id', {
-                controller: '{{name_single_title}}Controller',
-                templateUrl: 'templates/{{name_title}}.tpl'
+                controller: '{{name_title}}Controller',
+                templateUrl: 'templates/{{name_title}}Template.tpl'
             })
             {{/oats}}
             .otherwise({

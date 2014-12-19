@@ -16,4 +16,4 @@ var {{name_title}}Model = function () {
     {{/members}}
 };
 
-module.exports = {{name_title}}Model();
+module.exports = {{name_title}}Model;

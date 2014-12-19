@@ -1,6 +1,6 @@
 var theDB = require('../DBConnection');
 var theMessages = require('../Messages');
-var theDaoHelper = require('./DaoHelper');
+var theDaoHelper = require('../DaoHelper');
 
 var {{name_title}}Dao = function () {
     'use strict';
@@ -34,8 +34,8 @@ var {{name_title}}Dao = function () {
 
     this.update{{name_single_title}} = function (p{{name_single_title}}, pCallback) {
         theDaoHelper.executeQuery(
-            "UPDATE {{name}} SET {{#members}}{{^isId}}{{name}} = ?{{^last}}, {{/last}}{{/isId}}{{/members}} WHERE id = ?",
-            [{{#members}}{{^isId}}p{{name_single_title}}.{{name}}{{^last}}, {{/last}}{{/isId}}{{/members}}, p{{name_single_title}}.id],
+            "UPDATE {{name}} SET {{#members}}{{^isPrimary}}{{name}} = ?{{^last}}, {{/last}}{{/isPrimary}}{{/members}} WHERE id = ?",
+            [{{#members}}{{^isPrimary}}p{{name_single_title}}.{{name}}{{^last}}, {{/last}}{{/isPrimary}}{{/members}}, p{{name_single_title}}.id],
             theDaoHelper.UPDATE,
             pCallback
         );

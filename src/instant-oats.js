@@ -18,11 +18,39 @@ var InstantOats = function (pAppName, pOats) {
 
         // Client Based Templates
         {
-            name: 'App',
+            name: 'index',
+            type: 'single',
+            src: '../templates/client/index.tpl',
+            dest: './src/public/',
+            ext: 'html'
+        },
+        {
+            name: 'app',
+            type: 'single',
+            src: '../templates/client/app.tpl',
+            dest: './src/public/css/',
+            ext: 'css'
+        },
+        {
+            name: 'bower',
+            type: 'single',
+            src: '../templates/client/bower.tpl',
+            dest: './src/public/',
+            ext: 'json'
+        },
+        {
+            name: 'app',
             type: 'single',
             src: '../templates/client/App.tpl',
             dest: './src/public/js/',
             ext: 'js'
+        },
+        {
+            name: 'Template',
+            type: 'multi',
+            src: '../templates/client/Template.tpl',
+            dest: './src/public/templates/',
+            ext: 'tpl'
         },
         {
             name: 'Controller',
@@ -90,11 +118,11 @@ var InstantOats = function (pAppName, pOats) {
             ext: 'js'
         },
         {
-            name: 'bower',
+            name: 'App',
             type: 'single',
-            src: '../templates/client/bower.tpl',
-            dest: './src/public/',
-            ext: 'json'
+            src: '../templates/server/App.tpl',
+            dest: './src/',
+            ext: 'js'
         },
         {
             name: 'Gruntfile',
@@ -153,19 +181,26 @@ var InstantOats = function (pAppName, pOats) {
         ];
 
         var promise = null;
-        var mkdir = function (dir) {
+
+        var mkdir = function (pDir) {
             if (promise) {
-                promise = promise.then(function () {
-                    return FS.makeDirectory(dir);
-                })
+                promise = promise
+                    .then(function () {
+                        FS.makeDirectory(pDir)
+                    })
+                    .fail(function () {
+                        FS.makeDirectory(pDir)
+                    });
             } else {
-                promise = FS.makeDirectory(dir);
+                promise = FS.makeDirectory(pDir);
             }
         };
 
         for (var i = 0; i < dirs.length; i += 1) {
             mkdir(dirs[i]);
         }
+
+        return promise;
     }
 
     var preprocessOats = function () {
@@ -197,11 +232,11 @@ var InstantOats = function (pAppName, pOats) {
                     member.last = true;
                 }
 
-                if (oat.name.indexOf("id") !== -1) {
+                if (member.name.indexOf("id") !== -1) {
                     member.isId = true;
                 }
 
-                if (oat === "id") {
+                if (member.name === "id") {
                     member.isPrimary = true;
                 }
 
@@ -211,7 +246,7 @@ var InstantOats = function (pAppName, pOats) {
                     for (var k = 0; k < references.length; k += 1) {
                         var reference = references[k];
                         references[k] = {};
-                        references[k].name = reference;
+                        references[k].rname = reference;
 
                         if (k === references.length - 1) {
                             references[k].last = true;
@@ -268,8 +303,11 @@ var InstantOats = function (pAppName, pOats) {
     };
 
     preprocessOats();
-    makeDirectories();
-    processTemplateDefs();
+
+    makeDirectories()
+        .then(function () {
+            processTemplateDefs();
+        });
 };
 
 module.exports = InstantOats;
